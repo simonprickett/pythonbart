@@ -29,6 +29,8 @@ for station in stations.getElementsByTagName('station'):
 
          for estimate in etd.getElementsByTagName('estimate'):
              minutesToDeparture = estimate.getElementsByTagName('minutes')[0].firstChild.nodeValue
+             if (minutesToDeparture == "Leaving"):
+                  minutesToDeparture = "0"
              platform = estimate.getElementsByTagName('platform')[0].firstChild.nodeValue
              numCars = estimate.getElementsByTagName('length')[0].firstChild.nodeValue
              lineColor = estimate.getElementsByTagName('color')[0].firstChild.nodeValue
