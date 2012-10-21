@@ -32,5 +32,5 @@ for station in stations.getElementsByTagName('station'):
              platform = estimate.getElementsByTagName('platform')[0].firstChild.nodeValue
              numCars = estimate.getElementsByTagName('length')[0].firstChild.nodeValue
              lineColor = estimate.getElementsByTagName('color')[0].firstChild.nodeValue
-             print "{numCars} car {lineColor} line car leaves in {minutesToDeparture} minutes from platform {platform}.".format(numCars = numCars, lineColor = lineColor, minutesToDeparture = minutesToDeparture, platform = platform)
+             print "{numCars} car {lineColor} line train leaves in {minutesToDeparture} minutes from platform {platform}.".format(numCars = numCars, lineColor = lineColor, minutesToDeparture = minutesToDeparture, platform = platform)
 
