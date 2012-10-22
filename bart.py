@@ -9,6 +9,8 @@ dom = parseString(data)
 stations = dom.getElementsByTagName('stations')[0]
 stationData = {}
 
+print 'Begin reading data from SF BART API, please wait!'
+
 for station in stations.getElementsByTagName('station'):
      stationAbbr = station.getElementsByTagName('abbr')[0].firstChild.nodeValue
 
@@ -19,14 +21,12 @@ for station in stations.getElementsByTagName('station'):
      dom = parseString(data)
 
      stationName = dom.getElementsByTagName('name')[0].firstChild.nodeValue
-     print '********** DEPARTURES FROM {stationName} **********'.format(stationName = stationName)
      
      stationEtds = dom.getElementsByTagName('etd')
      stationDestinations = {}
 
      for etd in stationEtds:
          destination = etd.getElementsByTagName('destination')[0].firstChild.nodeValue
-         print 'Destination: {destination}'.format(destination = destination) 
 
          stationDestinationDepartures = []
          
@@ -39,7 +39,6 @@ for station in stations.getElementsByTagName('station'):
              platform = estimate.getElementsByTagName('platform')[0].firstChild.nodeValue
              numCars = estimate.getElementsByTagName('length')[0].firstChild.nodeValue
              lineColor = estimate.getElementsByTagName('color')[0].firstChild.nodeValue
-             print '- {numCars} car {lineColor} line train leaves in {minutesToDeparture} minutes from platform {platform}.'.format(numCars = numCars, lineColor = lineColor, minutesToDeparture = minutesToDeparture, platform = platform)
 
              stationDestinationDeparture['platform'] = platform
              stationDestinationDeparture['numCars'] = numCars
@@ -50,5 +49,19 @@ for station in stations.getElementsByTagName('station'):
              
          stationDestinations[destination] = stationDestinationDepartures
          
-     stationData[stationAbbr] = stationDestinations
+     stationData[stationName] = stationDestinations
+
+print 'Done reading data from SF BART API'
+print ''
+
+for stationName in stationData.keys():
+     stationDestinations = stationData[stationName]
+     print '********** DEPARTURES FROM {stationName} **********'.format(stationName= stationName)
+     
+     for stationDestination in stationDestinations.keys():
+          print stationDestination
+
+          for departure in stationDestinations[stationDestination]:
+               print '- {numCars} car {lineColor} line train leaves in {minutesToDeparture} minutes from platform {platform}.'.format(numCars = departure['numCars'], lineColor = departure['lineColor'], minutesToDeparture = departure['minutesToDeparture'], platform = departure['platform'])
+
      
